@@ -47,16 +47,16 @@ const viewController = (viewType:string) => {
   })
 }
 
-const musicVolumeController = (vol:number) => {
-  document.getElementById('controlMusicVolumeState').innerHTML = vol.toString();
-}
-
-const carLockController = (state:boolean) => {
-  document.getElementById('isCarOpenState').innerHTML = state ? 'open' : 'closed';
-}
-
-const windowsOpenController = (state:boolean) => {
-  document.getElementById('areCarWindowsOpenState').innerHTML = state ? 'open' : 'closed';
+const carController = {
+  musicVolumeController: (vol:number) => {
+    document.getElementById('controlMusicVolumeState').innerHTML = vol.toString();
+  },
+  carLockController: (state:boolean) => {
+    document.getElementById('isCarOpenState').innerHTML = state ? 'open' : 'closed';
+  },
+  windowsOpenController: (state:boolean) => {
+    document.getElementById('areCarWindowsOpenState').innerHTML = state ? 'open' : 'closed';
+  }
 }
 
 // Redux Reducers (State Handlers)
@@ -78,11 +78,11 @@ function carReducer(state = defaultCarState, action:any) {
   switch (action.type) {
     case 'TOGGLE_LOCK':
       state.isCarOpenState = !state.isCarOpenState;
-      carLockController(state.isCarOpenState);
+      carController.carLockController(state.isCarOpenState);
       return state;
     case 'TOGGLE_WINDOWS':
       state.areCarWindowsOpenState = !state.areCarWindowsOpenState;
-      windowsOpenController(state.areCarWindowsOpenState);
+      carController.windowsOpenController(state.areCarWindowsOpenState);
       return state;
     case 'SET_MUSIC_VOUME':
       if(action.payload == '1') {
@@ -93,13 +93,13 @@ function carReducer(state = defaultCarState, action:any) {
       ) {
         state.controlMusicVolumeState--;
       }
-      musicVolumeController(state.controlMusicVolumeState);
+      carController.musicVolumeController(state.controlMusicVolumeState);
       return state;
     default:
       // Init
-      carLockController(state.isCarOpenState);
-      windowsOpenController(state.areCarWindowsOpenState);
-      musicVolumeController(state.controlMusicVolumeState);
+      carController.carLockController(state.isCarOpenState);
+      carController.windowsOpenController(state.areCarWindowsOpenState);
+      carController.musicVolumeController(state.controlMusicVolumeState);
       return state;
   }
 }
