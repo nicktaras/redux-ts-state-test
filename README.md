@@ -1,10 +1,8 @@
-# token issuer outlet
+# redux test
 
-The token issuer outlet is the location where tokens are stored and dispatched. 
+Demo to enable developers to view redux and dev tools
 
-A token issuers configuration file will contain the details to reach this web url to store and access tokens.
-
-## serve 
+# development
 
 `npm run start`
 
@@ -12,11 +10,9 @@ A token issuers configuration file will contain the details to reach this web ur
 
 `npm run build`
 
-`/build` can be deployed to a chsoen web server location.
+`/build` can be deployed to a chosen web server. 
 
-## development of this library.
-
-See Developers Page inside Wiki
+For local dev, try using Nodes 'http-server'
 
 ### help / questions / improvements
 
