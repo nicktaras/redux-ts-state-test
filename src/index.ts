@@ -3,6 +3,8 @@ import { createStore, applyMiddleware, combineReducers } from '@reduxjs/toolkit'
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 // Redux Default States
+// Default states are flexible using any data type and structure you need,
+// which can be derived from data sync/async.
 
 const defaultCarState = {
   isCarOpenState: false,
@@ -14,6 +16,8 @@ const viewStateOptions = ['welcome', 'locks', 'sound']
 const defaultViewState = 'welcome';
 
 // Dispatch Actions to Stores
+// Actions are unique 'STRINGS' that instruct Redux which action(s) to perform.
+// The "Actions" role is the event messenger between a UI event and Redux Stores.
 
 // @ts-ignore
 window.navClickHandler = (event:any) => {
@@ -35,7 +39,8 @@ window.volClickHandler = (event:any) => {
   store.dispatch({ type: 'SET_MUSIC_VOUME', payload: event.currentTarget.dataset.vol });
 };
 
-// View Controllers 
+// View Controllers
+// This is a custom implementation, to manage the UI logic for views and the car events.
 
 const viewController = (viewType:string) => {
   viewStateOptions.forEach(( item:any ) => {
@@ -60,13 +65,14 @@ const carController = {
 }
 
 // Redux Reducers (State Handlers)
+// The reducers role is to listen to 'Action' events and reduce the new state into current.
+// Extension libraries or logic can be added to keep track of the previous state(s) (https://redux.js.org/usage/implementing-undo-history)
 
 function viewReducer(state = defaultViewState, action:any) {
   switch (action.type) {
     case 'SET_VIEW':
-      state = action.payload;
-      viewController(state);
-      return state;
+      viewController(action.payload);
+      return action.payload;
     default:
       // Init
       viewController(state);
@@ -105,6 +111,8 @@ function carReducer(state = defaultCarState, action:any) {
 }
 
 // Log Changes
+// Hooks can be added to keep track of events for logging of subscribing to store changes.
+// This could be used for analytics as an example.
 
 function logger({ getState }: any) {
   return (next: any) => (action: any) => {
